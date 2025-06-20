@@ -7,12 +7,12 @@ namespace CarInsuranceBot.TelegramHost.HostedServices
     public class TelegramPollingService : BackgroundService
     {
         private readonly ILogger<TelegramPollingService> _logger;
-        private readonly TelegramBotClient _botClient;
+        private readonly ITelegramBotClient _botClient;
         private readonly IUpdateHandler _updateHandler;
 
         public TelegramPollingService(
             ILogger<TelegramPollingService> logger,
-            TelegramBotClient botClient,
+            ITelegramBotClient botClient,
             IUpdateHandler updateHandler)
         {
             _logger = logger;

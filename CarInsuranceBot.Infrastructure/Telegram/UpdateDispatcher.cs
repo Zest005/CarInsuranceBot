@@ -10,11 +10,9 @@ namespace CarInsuranceBot.Infrastructure.Telegram
     public class UpdateDispatcher : IUpdateHandler
     {
         private readonly ILogger<UpdateDispatcher> _logger;
-        private readonly TelegramBotClient _botClient;
+        private readonly ITelegramBotClient _botClient;
 
-        public UpdateDispatcher(
-            ILogger<UpdateDispatcher> logger,
-            TelegramBotClient botClient)
+        public UpdateDispatcher(ILogger<UpdateDispatcher> logger, ITelegramBotClient botClient)
         {
             _logger = logger;
             _botClient = botClient;

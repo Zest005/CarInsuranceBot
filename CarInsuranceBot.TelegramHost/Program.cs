@@ -1,14 +1,32 @@
+using CarInsuranceBot.Application.Services;
+using CarInsuranceBot.Infrastructure.Extensions;
+using CarInsuranceBot.TelegramHost.HostedServices;
+using Serilog;
+
 namespace CarInsuranceBot.TelegramHost
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = Host.CreateApplicationBuilder(args);
-            builder.Services.AddHostedService<Worker>();
 
-            var host = builder.Build();
-            host.Run();
+            // Serilog
+            builder.Logging.ClearProviders();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .CreateLogger();
+
+            builder.Logging.AddSerilog(Log.Logger);
+
+            // DI
+            builder.Services.AddApplicationServices(); // clear extension
+            builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddHostedService<TelegramPollingService>();
+
+
+            await builder.Build().RunAsync();
         }
     }
 }

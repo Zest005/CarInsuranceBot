@@ -12,7 +12,7 @@ namespace CarInsuranceBot.Infrastructure.Extensions
         {
             var botToken = config["Telegram:Token"];
 
-            services.AddSingleton(new TelegramBotClient(botToken));
+            services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(botToken));
 
             services.AddSingleton<IUpdateHandler, UpdateDispatcher>();
 

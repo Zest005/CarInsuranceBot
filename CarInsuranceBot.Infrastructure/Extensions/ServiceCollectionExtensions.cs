@@ -1,12 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Telegram.Bot;
+using CarInsuranceBot.Infrastructure.Telegram;
+using Telegram.Bot.Polling;
 
 namespace CarInsuranceBot.Infrastructure.Extensions
 {
-    class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration config)
+        {
+            var botToken = config["Telegram:Token"];
+
+            services.AddSingleton(new TelegramBotClient(botToken));
+
+            services.AddSingleton<IUpdateHandler, UpdateDispatcher>();
+
+            // TODO: Mindee, OpenAI, session storage
+
+            return services;
+        }
     }
 }

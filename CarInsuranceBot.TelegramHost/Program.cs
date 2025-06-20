@@ -12,8 +12,6 @@ namespace CarInsuranceBot.TelegramHost
             var builder = Host.CreateApplicationBuilder(args);
 
             // Serilog
-            builder.Logging.ClearProviders();
-
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(builder.Configuration)
                 .CreateLogger();
@@ -21,7 +19,7 @@ namespace CarInsuranceBot.TelegramHost
             builder.Logging.AddSerilog(Log.Logger);
 
             // DI
-            builder.Services.AddApplicationServices(); // clear extension
+            builder.Services.AddApplicationServices(); // empty extension
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddHostedService<TelegramPollingService>();
 
